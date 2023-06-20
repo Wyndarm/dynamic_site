@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 require('connect.php');
 
 
@@ -7,6 +8,18 @@ function tt($value) {
     echo '<pre>';
     print_r($value);
     echo '</pre>';
+}
+
+function userAuth($user) {
+    $_SESSION['id'] = $user['id'];
+    $_SESSION['login'] = $user['username'];
+    $_SESSION['admin'] = $user['admin'];
+
+    if ($_SESSION['admin']) {
+        header('location: ' . BASE_URL . 'admin/admin.php');
+    } else {
+        header('location: ' . BASE_URL);    
+    }
 }
 
 
@@ -94,9 +107,6 @@ function insert($table, $params = []) {
     
     $sql = "INSERT INTO $table ($coll) VALUES ($mask);";
 
-    // tt($sql);
-    // exit();
-
     $query = $pdo->prepare($sql);
     $query->execute($params);
 
@@ -122,9 +132,6 @@ function update($table, $id, $params = []) {
 
     $sql = "UPDATE $table SET $str WHERE id = $id;";
 
-    // tt($sql);
-    // exit();
-
     $query = $pdo->prepare($sql);
     $query->execute($params);
 
@@ -135,17 +142,14 @@ function update($table, $id, $params = []) {
 function delete($table, $id) {
     global $pdo;
 
-    // DELETE FROM `users` WHERE `users`.`id` = 5
-    // $sql = "UPDATE $table SET $str WHERE id = $id;";
     $sql = "DELETE FROM $table WHERE id = $id;";
-
-    // tt($sql);
-    // exit();
 
     $query = $pdo->prepare($sql);
     $query->execute();
 
     dbCheckError($query);
 }
+
+// session_unset();
 
 ?>

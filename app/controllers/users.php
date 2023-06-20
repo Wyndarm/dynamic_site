@@ -3,13 +3,14 @@
 
     $errMsg = '';
 
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['button-reg'])) {
         $admin = 0;
         $login = trim($_POST['login']);
         $email = trim($_POST['mail']);
         $passF = trim($_POST['pass-first']);
         $passS = trim($_POST['pass-second']);
-
 
         if ($login === '' || $email === '' || $passF === '' || $passS === '') {
             $errMsg = 'Не все поля заполнены!';
@@ -20,10 +21,6 @@
         } elseif ($passF !== $passS) {
             $errMsg = 'Пароли в обоих полях должны совпадать'; 
         } 
-        // elseif ($email = selectOne('users', ['email' => $email])) {
-        //     $errMsg = 'Пользователем с такой почтой уже существует'; 
-        //     $email = '';
-        // } 
         else {
             $existance = selectOne('users', ['email' => $email]);
             if ($existance['email'] === $email) {
@@ -37,9 +34,33 @@
                     'password' => $pass,
                 ];     
                 $id = insert('users', $post);
-                $errMsg = "Пользователь " . "<strong>" . $login . "</strong>" . " успешно зарегистрирован!";
+
+                $user = selectOne('users', ['id' => $id]);
+                
+                userAuth($existance);
             }
         }
+    } else {
+        $login = '';
+        $email = '';
+    }
+
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['button-log'])) {
+        $email = trim($_POST['mail']);
+        $pass = trim($_POST['password']);
+        
+        if ($email === '' || $pass === '') {
+            $errMsg = 'Не все поля заполнены!';
+        } else {
+            $existance = selectOne('users', ['email' => $email]);
+            if ($existance && password_verify($pass, $existance['password'])) {
+                userAuth($existance);
+            } else {
+                $errMsg = 'Почта или пароль введены неверно'; 
+            }
+        }
+        
     } else {
         $login = '';
         $email = '';
