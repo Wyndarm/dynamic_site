@@ -3,8 +3,6 @@
 
     $errMsg = '';
 
-
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['button-reg'])) {
         $admin = 0;
         $login = trim($_POST['login']);
@@ -50,6 +48,8 @@
         $email = trim($_POST['mail']);
         $pass = trim($_POST['password']);
         
+        $_SESSION['i'] = 0;
+
         if ($email === '' || $pass === '') {
             $errMsg = 'Не все поля заполнены!';
         } else {
@@ -57,7 +57,9 @@
             if ($existance && password_verify($pass, $existance['password'])) {
                 userAuth($existance);
             } else {
-                $errMsg = 'Почта или пароль введены неверно'; 
+                $errMsg = 'Почта или пароль введены неверно';
+                $_SESSION['i']++;
+                echo $_SESSION['i']; 
             }
         }
         
