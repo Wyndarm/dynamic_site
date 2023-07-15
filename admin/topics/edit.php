@@ -28,7 +28,7 @@
 
     <div class="container">
         <div class="row">
-        <?php include("../../app/include/sidebar-admin.php"); ?>
+            <?php include("../../app/include/sidebar-admin.php"); ?>
             <div class="posts col-9">
                 <div class="button row">
                     <a href="<?php echo BASE_URL . "/admin/topics/create.php" ?>" class="col-3 btn btn-success">Создать</a>
@@ -36,22 +36,30 @@
                     <a href="<?php echo BASE_URL . "/admin/topics/index.php" ?>" class="col-3 btn btn-warning">Редактировать</a>
                 </div>
                 <div class="row title-table">
-                    <h2>Управление категориями</h2>
-                    <div class="col-1">ID</div>
-                    <div class="col-5">Название</div>
-                    <div class="col-2">Управление</div>
+                    <h2>Обновление категории</h2>
                 </div>
-                <? foreach($topics as $key => $topic): ?>
-                <div class="row post">
-                    <div class="id col-1"><?=$key + 1; ?></div>
-                    <div class="title col-5"><?=$topic['name']; ?></div>
-                    <div class="red col-2"><a href="edit.php?id=<?=$topic['id']; ?>">edit</a></div>
-                    <div class="del col-2"><a href="edit.php?del_id=<?=$topic['id']; ?>">delete</a></div>
+                <div class="mb-12 col-12 col-md-12 err">
+                    <p><?=$errMsg?></p>
                 </div>
-                <?php endforeach; ?>
+                <div class="w-100"></div>
+                <div class="row add-post">
+                    <form action="edit.php" method="post">
+                        <input type="hidden" value="<?=$id; ?>" name="id">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Имя категории" aria-label="Имя категории" value="<?=$name; ?>" name="name">
+                        </div>
+                        <div class="col">
+                            <label for="content" class="form-label">Описание категории</label>
+                            <textarea class="form-control" id="content" rows="6" name="description"><?=$description; ?></textarea>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary" type="submit" name="topic-edit">Обновить категорию</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <!-- Footer -->
     <?php

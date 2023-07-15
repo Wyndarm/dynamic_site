@@ -1,6 +1,6 @@
-<?php session_start() ?>
 <?php 
   include("../../path.php");
+  include("../../app/controllers/posts.php");
 ?>
 
 <!doctype html>
@@ -38,31 +38,24 @@
                 <div class="row title-table">
                     <h2>Управление записями</h2>
                     <div class="col-1">ID</div>
-                    <div class="col-5">Название</div>
+                    <div class="col-3">Название</div>
                     <div class="col-2">Автор</div>
-                    <div class="col-2">Управление</div>
+                    <div class="col-6">Управление</div>
                 </div>
+                <?php foreach($postsAdm as $key => $post): ?>
                 <div class="row post">
-                    <div class="id col-1">1</div>
-                    <div class="title col-5">Какая-то там статья</div>
-                    <div class="author col-2">Виталик</div>
+                    <div class="id col-1"><?=$post['id']; ?></div>
+                    <div class="title col-3"><?=$post['title']; ?></div>
+                    <div class="author col-2"><?=$post['username']; ?></div>
                     <div class="red col-2"><a href="#">edit</a></div>
                     <div class="del col-2"><a href="#">delete</a></div>
+                    <?php if($post['status']): ?>
+                      <div class="status col-2"><a href="#">unpublish</a></div>
+                    <?php else: ?>
+                      <div class="status col-2"><a href="#">publish</a></div>
+                    <?php endif; ?>
                 </div>
-                <div class="row post">
-                    <div class="id col-1">1</div>
-                    <div class="title col-5">Какая-то там статья</div>
-                    <div class="author col-2">Виталик</div>
-                    <div class="red col-2"><a href="#">edit</a></div>
-                    <div class="del col-2"><a href="#">delete</a></div>
-                </div>
-                <div class="row post">
-                    <div class="id col-1">1</div>
-                    <div class="title col-5">Какая-то там статья</div>
-                    <div class="author col-2">Виталик</div>
-                    <div class="red col-2"><a href="#">edit</a></div>
-                    <div class="del col-2"><a href="#">delete</a></div>
-                </div>
+                <?php endforeach ?>
             </div>
         </div>
     </div>

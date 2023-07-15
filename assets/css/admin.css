@@ -244,3 +244,9 @@ header ul li ul li a {
     margin: 2rem 0;
 } */
 
+.err p {
+    color: red;
+    font-style: italic;
+    font-size: 0.8rem;
+}
+

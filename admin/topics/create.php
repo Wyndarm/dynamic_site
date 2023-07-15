@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <?php 
   include("../../path.php");
   include("../../app/controllers/topics.php");
@@ -29,9 +28,9 @@
 
     <div class="container">
         <div class="row">
-        <?php include("../../app/include/sidebar-admin.php"); ?>
+            <?php include("../../app/include/sidebar-admin.php"); ?>
             <div class="posts col-9">
-            <div class="button row">
+                <div class="button row">
                     <a href="<?php echo BASE_URL . "/admin/topics/create.php" ?>" class="col-3 btn btn-success">Создать</a>
                     <span class="col-1"></span>
                     <a href="<?php echo BASE_URL . "/admin/topics/index.php" ?>" class="col-3 btn btn-warning">Редактировать</a>
@@ -39,23 +38,27 @@
                 <div class="row title-table">
                     <h2>Создание категории</h2>
                 </div>
+                <div class="mb-12 col-12 col-md-12 err">
+                    <p><?=$errMsg?></p>
+                </div>
+                <div class="w-100"></div>
                 <div class="row add-post">
                     <form action="create.php" method="post">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="Имя категории" aria-label="Имя категории" name="name">
+                            <input type="text" class="form-control" placeholder="Имя категории" aria-label="Имя категории" value="<?=$name; ?>" name="name">
                         </div>
                         <div class="col">
                             <label for="content" class="form-label">Описание категории</label>
-                            <textarea class="form-control" id="content" rows="6" name="description"></textarea>
+                            <textarea class="form-control" id="content" rows="6" name="description"><?=$description; ?></textarea>
                         </div>
                         <div class="col">
-                            <button class="btn btn-primary" type="submit">Создать категорию</button>
+                            <button class="btn btn-primary" type="submit" name="topic-create">Создать категорию</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <!-- Footer -->
     <?php
